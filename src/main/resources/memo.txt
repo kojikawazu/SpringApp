@@ -1,0 +1,41 @@
+
+	 	<!-- 一覧表示 -->
+	 	<table class="table table-striped">
+	 		<thead>
+	 			<tr>
+	 				<th scope="col">id</th>
+	 				<th scope="col">title</th>
+	 				<th scope="col">tag</th>
+	 				<th scope="col">comment</th>
+	 				<th scope="col">thanksCnt</th>
+	 				<th scope="col">created</th>
+	 				<th scope="col">updated</th>
+	 				<th scope="col"> </th>
+	 			</tr>
+	 		</thead>
+	 		<tbody>
+	 			<tr th:each="blogmain : ${blogmainList}">
+	 				<th scope="row" th:text="${blogmain.id}">1</th>
+	 				<td th:text="${blogmain.title}"></td>
+	 				<td th:text="${blogmain.tag}"></td>
+	 				<td th:text="${blogmain.comment}"></td>
+	 				<td th:text="${blogmain.thanksCnt}"></td>
+	 				<td th:text="${blogmain.created}"></td>
+	 				<td th:text="${blogmain.updated}"></td>
+	 				<td>
+	 					<!-- 編集フォーム -->
+	 					<form th:action="@{/blog/edit}" method="post">
+	 						<input type="submit" name="edit" class="btn btn-outline-dark" value="編集"  />
+	 						<input type="hidden" name="editor" th:value="${blogmain.id}" />	
+	 					</form>
+ 					</td>
+	 				<td>
+	 					<!-- 削除フォーム -->
+	 					<form th:action="@{/blog/delete}" method="post" onclick="return checkDelete();">
+	 						<input type="submit" name="delete" class="btn btn-outline-dark" value="✕"  />
+	 						<input type="hidden" name="id" th:value="${blogmain.id}" />	
+	 					</form>
+ 					</td>
+	 			</tr>
+	 		</tbody>
+	 	</table>
