@@ -1,6 +1,7 @@
 src/* linguist-vendored
 src/* linguist-documentation
 
+file.java linguist-vendored=true
 file.js linguist-vendored=false
 file.html linguist-vendored=false
 
