@@ -1,2 +1,7 @@
 src/* linguist-vendored
 src/* linguist-documentation
+
+file.js linguist-vendored=false
+file.html linguist-vendored=false
+
+file.rb linguist-documentation=false
