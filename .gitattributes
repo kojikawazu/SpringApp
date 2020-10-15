@@ -1,8 +1,2 @@
-src/* linguist-vendored
-src/* linguist-documentation
-
-file.java linguist-vendored=true
-file.js linguist-vendored=false
-file.html linguist-vendored=false
-
-file.rb linguist-documentation=false
+src/main/resources/templates/* linguist-vendored
+src/main/resources/templates/* linguist-documentation
