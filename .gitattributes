@@ -1,2 +1,5 @@
-src/* linguist-vendored
-file.html linguist-vendored=false
+src/* linguist-vendored                 # vendored codeとして認識
+file.html linguist-vendored=false       # vendored codeから除外
+
+src/* linguist-documentation            # documentationとして認識
+file.rb linguist-documentation=false  # documentationから除外
