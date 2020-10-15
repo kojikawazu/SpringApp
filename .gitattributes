@@ -1,5 +1,5 @@
 src/main/resources/templates/* linguist-vendored
 src/main/resources/templates/* linguist-documentation
 
-src/main/templates/* linguist-vendored
-src/main/templates/* linguist-documentation
+bin/main/templates/* linguist-vendored
+bin/main/templates/* linguist-documentation
