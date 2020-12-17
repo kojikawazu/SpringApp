@@ -32,7 +32,7 @@ public class BlogReplyModel {
 	}
 	
 	public String getName() {
-		return name;
+		return ( name != null ? name : "" );
 	}
 
 	public void setName(String name) {
@@ -40,7 +40,7 @@ public class BlogReplyModel {
 	}
 
 	public String getComment() {
-		return comment;
+		return ( comment != null ? comment : "" );
 	}
 
 	public void setComment(String comment) {
@@ -56,7 +56,9 @@ public class BlogReplyModel {
 	}
 
 	public LocalDateTime getCreated() {
-		return created;
+		LocalDateTime dateTime = LocalDateTime.of(2000, 01, 01, 00, 00, 00);
+		return ( created != null ? created : dateTime );
+		
 	}
 
 	public void setCreated(LocalDateTime created) {

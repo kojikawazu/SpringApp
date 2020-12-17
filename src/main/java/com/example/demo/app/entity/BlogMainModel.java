@@ -25,19 +25,19 @@ public class BlogMainModel {
 		this.id = id;
 	}
 	public String getTitle() {
-		return title;
+		return ( title != null ? title : "" );
 	}
 	public void setTitle(String title) {
 		this.title = title;
 	}
 	public String getTag() {
-		return tag;
+		return ( tag != null ? tag : "" );
 	}
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
 	public String getComment() {
-		return comment;
+		return ( comment != null ? comment : "" );
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
@@ -49,13 +49,13 @@ public class BlogMainModel {
 		this.thanksCnt = thanksCnt;
 	}
 	public LocalDateTime getCreated() {
-		return created;
+		return ( created != null ? created : LocalDateTime.of(2000, 01, 01, 00, 00, 00) );
 	}
 	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
 	public LocalDateTime getUpdated() {
-		return updated;
+		return ( updated != null ? updated : LocalDateTime.of(2000, 01, 01, 00, 00, 00) );
 	}
 	public void setUpdated(LocalDateTime updated) {
 		this.updated = updated;

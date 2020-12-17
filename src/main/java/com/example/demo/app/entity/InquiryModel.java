@@ -26,7 +26,7 @@ public class InquiryModel {
 	}
 
 	public String getName() {
-		return name;
+		return ( name != null ? name : "" );
 	}
 
 	public void setName(String name) {
@@ -34,7 +34,7 @@ public class InquiryModel {
 	}
 
 	public String getEmail() {
-		return email;
+		return ( email != null ? email : "" );
 	}
 
 	public void setEmail(String email) {
@@ -42,7 +42,7 @@ public class InquiryModel {
 	}
 
 	public String getComment() {
-		return comment;
+		return ( comment != null ? comment : "" );
 	}
 
 	public void setComment(String comment) {
@@ -50,7 +50,8 @@ public class InquiryModel {
 	}
 
 	public LocalDateTime getCreated() {
-		return created;
+		LocalDateTime dateTime = LocalDateTime.of(2000, 01, 01, 00, 00, 00);
+		return ( created != null ? created : dateTime );
 	}
 
 	public void setCreated(LocalDateTime created) {
