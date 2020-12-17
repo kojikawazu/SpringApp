@@ -24,7 +24,7 @@ public class SurveyModel {
 		this.id = id;
 	}
 	public String getName() {
-		return name;
+		return ( name != null ? name : "");
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -54,13 +54,14 @@ public class SurveyModel {
 		this.satisfaction = satisfaction;
 	}
 	public String getComment() {
-		return comment;
+		return ( comment != null ? comment : "");
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
 	public LocalDateTime getCreated() {
-		return created;
+		LocalDateTime dateTime = LocalDateTime.of(2000, 01, 01, 00, 00, 00);
+		return ( created != null ? created : dateTime );
 	}
 	public void setCreated(LocalDateTime created) {
 		this.created = created;

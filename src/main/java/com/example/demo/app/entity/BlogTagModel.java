@@ -19,7 +19,7 @@ public class BlogTagModel {
 	}
 
 	public String getTag() {
-		return tag;
+		return ( tag != null ? tag : "" );
 	}
 
 	public void setTag(String tag) {
