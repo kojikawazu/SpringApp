@@ -67,6 +67,4 @@ public class SurveyModel {
 		this.created = created;
 	}
 	
-	
-	
 }

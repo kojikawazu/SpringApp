@@ -68,9 +68,5 @@ public class InquiryReplyModel {
 	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
-	
-	
-	
-	
 
 }
