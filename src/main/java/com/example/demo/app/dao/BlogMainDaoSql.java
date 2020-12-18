@@ -82,16 +82,18 @@ public class BlogMainDaoSql implements BlogMainDao {
 		// TODO IDによるデータ取得
 		String sql = "SELECT id, title, tag, comment, thanksCnt, created, updated FROM blog_main WHERE id = ?";
 		Map<String, Object> result = jdbcTemp.queryForMap(sql, id);
-			
-		BlogMainModel model = new BlogMainModel();
-		model.setId((int)result.get("id"));
-		model.setTitle((String)result.get("title"));
-		model.setTag((String)result.get("tag"));
-		model.setComment((String)result.get("comment"));
-		model.setThanksCnt((int)result.get("thanksCnt"));
-		model.setCreated(((Timestamp)result.get("created")).toLocalDateTime());
-		model.setUpdated(((Timestamp)result.get("updated")).toLocalDateTime());
 		
+		BlogMainModel model = null;
+		if(result != null) {
+			model = new BlogMainModel();
+			model.setId((int)result.get("id"));
+			model.setTitle((String)result.get("title"));
+			model.setTag((String)result.get("tag"));
+			model.setComment((String)result.get("comment"));
+			model.setThanksCnt((int)result.get("thanksCnt"));
+			model.setCreated(((Timestamp)result.get("created")).toLocalDateTime());
+			model.setUpdated(((Timestamp)result.get("updated")).toLocalDateTime());
+		}
 		return model;
 	}
 	
@@ -122,6 +124,7 @@ public class BlogMainDaoSql implements BlogMainDao {
 		String sql = "SELECT thanksCnt FROM blog_main WHERE id = ?";
 		Map<String, Object> result = jdbcTemp.queryForMap(sql, id);
 		
+		if( result == null) {	return -1; }
 		int thanksCnter = (int)result.get("thanksCnt");
 		thanksCnter++;
 		

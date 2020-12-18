@@ -72,6 +72,7 @@ public class BlogTagDaoSql implements BlogTagDao {
 		// TODO IDによる選択
 		String sql = "SELECT id, tag FROM blog_tag WHERE id = ?";
 		Map<String, Object> result = jdbcTemp.queryForMap(sql, id);
+		if( result == null )	return null;
 		BlogTagModel model = new BlogTagModel();
 		model.setId((int)result.get("id"));
 		model.setTag((String)result.get("tag"));

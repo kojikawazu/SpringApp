@@ -75,6 +75,7 @@ public class InquiryDaoSql implements InquiryDao {
 		String sql = "SELECT id, name, email, comment, created FROM inquiry WHERE id = ?";
 		Map<String, Object> result = jdbcTemp.queryForMap(sql, id);
 			
+		if( result == null) return null;
 		InquiryModel model = new InquiryModel();
 		model.setId((int)result.get("id"));
 		model.setName((String)result.get("name"));

@@ -3,15 +3,22 @@ package com.example.demo.app.entity;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class SurveyModelTest {
+	
+	SurveyModel model = null;
+	
+	@BeforeEach
+	public void Init() {
+		model = new SurveyModel();
+	}
 
 	@Test
 	public void InitTest0() {
 		// TODO コンストラクタテスト
 		LocalDateTime dateTime = LocalDateTime.of(2000, 01, 01, 00, 00, 00);
-		SurveyModel model = new SurveyModel();
 		
 		Assertions.assertEquals(model.getId(), 0);
 		Assertions.assertEquals(model.getName(), "");
@@ -27,7 +34,6 @@ class SurveyModelTest {
 	public void InitTest1() {
 		// TODO コンストラクタテスト
 		LocalDateTime dateTime = LocalDateTime.of(2000, 01, 01, 00, 00, 00);
-		SurveyModel model = new SurveyModel();
 		
 		model.setId(1);
 		model.setName("テストネーム");
