@@ -103,7 +103,8 @@ public class InquiryReplyDaoSql implements InquiryReplyDao {
 		// TODO IDによるデータ取得
 		String sql = "SELECT id, inquiry_id, name, email, comment, created FROM inquiry_reply WHERE id = ?";
 		Map<String, Object> result = jdbcTemp.queryForMap(sql, id);
-			
+		
+		if(result == null)	return null;	
 		InquiryReplyModel model = new InquiryReplyModel();
 		model.setId((int)result.get("id"));
 		model.setInquiry_id((int)result.get("inquiry_id"));
