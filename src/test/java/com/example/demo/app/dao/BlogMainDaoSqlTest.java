@@ -160,16 +160,34 @@ class BlogMainDaoSqlTest {
 		Assertions.assertEquals(list.size(), 0);
 	}
 	
+	public void InitInsert() {
+		// TODO 更新テストの初期化
+		
+		// Mock化
+		jdbcTemp = mock(JdbcTemplate.class);
+		when(jdbcTemp.update(
+				any(), 
+				eq("テストタイトル"),
+				eq("テストタグ"),
+				eq("テストコメント"),
+				eq(1),
+				eq(dateTime2)
+				)).thenReturn(1);
+		
+		dao = new BlogMainDaoSql(jdbcTemp);
+	}
+	
+	@Test
+	public void InsertTest() {
+		// TODO 更新テスト
+		InitInsert();
+		
+		BlogMainModel model = new BlogMainModel();
+		dao.insertBlog(model);
+	}
+	
 	public void InitUpdate() {
 		// TODO 更新テストの初期化
-		BlogMainModel model = new BlogMainModel();
-		model.setId(1);
-		model.setTitle("テストタイトル");
-		model.setTag("テストタグ");
-		model.setComment("テストコメント");
-		model.setThanksCnt(1);
-		model.setCreated(dateTime1);
-		model.setUpdated(dateTime2);
 		
 		// Mock化
 		jdbcTemp = mock(JdbcTemplate.class);

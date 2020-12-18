@@ -92,6 +92,8 @@ public class BlogReplyDaoSql implements BlogReplyDao {
 		// TODO IDで選択
 		String sql = "SELECT id, commentid, name, comment, thanksCnt, created FROM blog_reply WHERE id = ?";
 		Map<String, Object> result = jdbcTemp.queryForMap(sql, id);
+		
+		if(result == null)	return null;
 			
 		BlogReplyModel model = new BlogReplyModel();
 		model.setId((int)result.get("id"));
@@ -110,6 +112,7 @@ public class BlogReplyDaoSql implements BlogReplyDao {
 		String sql = "SELECT thanksCnt FROM blog_reply WHERE id = ?";
 		Map<String, Object> result = jdbcTemp.queryForMap(sql, id);
 		
+		if( result == null) {	return -1; }
 		int thanksCnter = (int)result.get("thanksCnt");
 		thanksCnter++;
 		
