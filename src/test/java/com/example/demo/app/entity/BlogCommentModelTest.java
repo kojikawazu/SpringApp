@@ -3,15 +3,22 @@ package com.example.demo.app.entity;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BlogCommentModelTest {
+	
+	BlogCommentModel model = null;
+	
+	@BeforeEach
+	public void Init() {
+		model = new BlogCommentModel();
+	}
 	
 	@Test
 	public void InitTest0() {
 		// TODO 初期コンストラクタのテスト
 		LocalDateTime dateTime = LocalDateTime.of(2000, 01, 01, 00, 00, 00);
-		BlogCommentModel model = new BlogCommentModel();
 		
 		Assertions.assertEquals(model.getId(), 0);
 		Assertions.assertEquals(model.getName(), "");
@@ -25,7 +32,6 @@ class BlogCommentModelTest {
 	public void InitTest1() {
 		// TODO 値設定後のテスト
 		LocalDateTime dateTime = LocalDateTime.now();
-		BlogCommentModel model = new BlogCommentModel();
 		
 		model.setId(1);
 		model.setName("テスト");

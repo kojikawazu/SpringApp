@@ -269,6 +269,7 @@ public class BlogMainController {
 	public String thanksIncrement2(BlogMainId thanksCnter) {
 		// TODO いいね数加算
 		int cnter = blogMainService.thanksIncrement(thanksCnter.getId());
+		if(cnter != -1)	cnter = 0;
 		return String.valueOf(cnter);
 	}
 	
