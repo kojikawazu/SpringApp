@@ -1,5 +1,6 @@
-package com.example.demo.app.dao;
+package com.example.demo.app.service;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -16,17 +17,20 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.example.demo.app.dao.BlogReplyDao;
+import com.example.demo.app.dao.BlogReplyDaoSql;
 import com.example.demo.app.entity.BlogReplyModel;
 
-class BlogReplyDaoSqlTest {
+class BlogReplyServiceUseTest {
 	
-	BlogReplyDaoSql dao = null;
+	// テスト対象
+	BlogReplyServiceUse service = null;
 	
 	LocalDateTime dateTime1 = LocalDateTime.of(2000, 01, 01, 00, 00, 00);
 	
 	@Mock
 	JdbcTemplate jdbcTemp = null;
-
+	
 	public void InitSelectAll() {
 		// TODO 全て選択初期化
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -44,7 +48,7 @@ class BlogReplyDaoSqlTest {
 		jdbcTemp = mock(JdbcTemplate.class);
 		when(jdbcTemp.queryForList(any())).thenReturn(mapList);
 		
-		dao = new BlogReplyDaoSql(jdbcTemp);
+		setService();
 	}
 	
 	
@@ -53,7 +57,7 @@ class BlogReplyDaoSqlTest {
 		// TODO 全選択テスト
 		InitSelectAll();
 		
-		List<BlogReplyModel> list = dao.getAll();
+		List<BlogReplyModel> list = service.getAll();
 		
 		Assertions.assertEquals(list.size(), 1);
 		Assertions.assertEquals(list.get(0).getId(), 1);
@@ -63,6 +67,45 @@ class BlogReplyDaoSqlTest {
 		Assertions.assertEquals(list.get(0).getThanksCnt(), 1);
 		Assertions.assertEquals(list.get(0).getCreated().toString(), dateTime1.toString());
 		list.clear();
+	}
+	
+	public void InitSelect() {
+		// TODO 全て選択初期化
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("id", 1);
+		map.put("commentid", 1);
+		map.put("name", "テストネーム");
+		map.put("comment", "テストコメント");
+		map.put("thanksCnt", 1);
+		map.put("created", Timestamp.valueOf(dateTime1));
+		
+		// Mock化
+		jdbcTemp = mock(JdbcTemplate.class);
+		when(jdbcTemp.queryForMap(any(), eq(1))).thenReturn(map);
+		when(jdbcTemp.queryForMap(any(), eq(2))).thenReturn(null);
+		
+		setService();
+	}
+	
+	
+	@Test
+	public void SelectTest() {
+		// TODO 全選択テスト
+		InitSelect();
+		
+		BlogReplyModel model = service.select(1);
+		
+		Assertions.assertNotNull(model);
+		Assertions.assertEquals(model.getId(), 1);
+		Assertions.assertEquals(model.getCommentid(), 1);
+		Assertions.assertEquals(model.getName(), "テストネーム");
+		Assertions.assertEquals(model.getComment(), "テストコメント");
+		Assertions.assertEquals(model.getThanksCnt(), 1);
+		Assertions.assertEquals(model.getCreated().toString(), dateTime1.toString());
+		
+		model = service.select(2);
+		Assertions.assertNull(model);
 	}
 	
 	public void InitSelect_byCommentId() {
@@ -84,7 +127,7 @@ class BlogReplyDaoSqlTest {
 		when(jdbcTemp.queryForList(any(), eq(1))).thenReturn(mapList);
 		when(jdbcTemp.queryForList(any(), eq(2))).thenReturn(mapList2);
 		
-		dao = new BlogReplyDaoSql(jdbcTemp);
+		setService();
 	}
 	
 	
@@ -93,7 +136,7 @@ class BlogReplyDaoSqlTest {
 		// TODO 全選択テスト
 		InitSelect_byCommentId();
 		
-		List<BlogReplyModel> list = dao.select_blogId(1);
+		List<BlogReplyModel> list = service.select_byBlogId(1);
 		
 		Assertions.assertEquals(list.size(), 1);
 		Assertions.assertEquals(list.get(0).getId(), 1);
@@ -104,47 +147,8 @@ class BlogReplyDaoSqlTest {
 		Assertions.assertEquals(list.get(0).getCreated().toString(), dateTime1.toString());
 		list.clear();
 		
-		list = dao.select_blogId(2);
+		list = service.select_byBlogId(2);
 		Assertions.assertEquals(list.size(), 0);
-	}
-	
-	public void InitSelect() {
-		// TODO 全て選択初期化
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("id", 1);
-		map.put("commentid", 1);
-		map.put("name", "テストネーム");
-		map.put("comment", "テストコメント");
-		map.put("thanksCnt", 1);
-		map.put("created", Timestamp.valueOf(dateTime1));
-		
-		// Mock化
-		jdbcTemp = mock(JdbcTemplate.class);
-		when(jdbcTemp.queryForMap(any(), eq(1))).thenReturn(map);
-		when(jdbcTemp.queryForMap(any(), eq(2))).thenReturn(null);
-		
-		dao = new BlogReplyDaoSql(jdbcTemp);
-	}
-	
-	
-	@Test
-	public void SelectTest() {
-		// TODO 全選択テスト
-		InitSelect();
-		
-		BlogReplyModel model = dao.select(1);
-		
-		Assertions.assertNotNull(model);
-		Assertions.assertEquals(model.getId(), 1);
-		Assertions.assertEquals(model.getCommentid(), 1);
-		Assertions.assertEquals(model.getName(), "テストネーム");
-		Assertions.assertEquals(model.getComment(), "テストコメント");
-		Assertions.assertEquals(model.getThanksCnt(), 1);
-		Assertions.assertEquals(model.getCreated().toString(), dateTime1.toString());
-		
-		model = dao.select(2);
-		Assertions.assertNull(model);
 	}
 	
 	public void InitInsert() {
@@ -168,7 +172,7 @@ class BlogReplyDaoSqlTest {
 				eq(dateTime1)
 				)).thenReturn(1);
 		
-		dao = new BlogReplyDaoSql(jdbcTemp);
+		setService();
 	}
 	
 	@Test
@@ -177,7 +181,7 @@ class BlogReplyDaoSqlTest {
 		InitInsert();
 		
 		BlogReplyModel model = new BlogReplyModel();
-		dao.insertReply(model);
+		service.save(model);
 	}
 	
 	public void InitDelete() {
@@ -187,7 +191,7 @@ class BlogReplyDaoSqlTest {
 		when(jdbcTemp.update(any(), eq(1))).thenReturn(1);
 		when(jdbcTemp.update(any(), eq(2))).thenReturn(0);
 		
-		dao = new BlogReplyDaoSql(jdbcTemp);
+		setService();
 	}
 	
 	@Test
@@ -195,11 +199,8 @@ class BlogReplyDaoSqlTest {
 		// TODO 削除処理のテスト
 		InitDelete();
 		
-		int ret = dao.deleteReply(1);
-		Assertions.assertEquals(ret, 1);
-		
-		ret = dao.deleteReply(2);
-		Assertions.assertEquals(ret, 0);
+		assertDoesNotThrow(() -> service.delete(1));
+		assertThrows(RuntimeException.class, () -> service.delete(2));
 	}
 	
 	public void InitDelete_byCommentId() {
@@ -209,7 +210,7 @@ class BlogReplyDaoSqlTest {
 		when(jdbcTemp.update(any(), eq(1))).thenReturn(1);
 		when(jdbcTemp.update(any(), eq(2))).thenReturn(0);
 		
-		dao = new BlogReplyDaoSql(jdbcTemp);
+		setService();
 	}
 	
 	@Test
@@ -217,11 +218,8 @@ class BlogReplyDaoSqlTest {
 		// TODO 削除処理のテスト
 		InitDelete_byCommentId();
 		
-		int ret = dao.deleteReply_byBlog(1);
-		Assertions.assertEquals(ret, 1);
-		
-		ret = dao.deleteReply_byBlog(2);
-		Assertions.assertEquals(ret, 0);
+		service.delete_byBlogid(1);
+		service.delete_byBlogid(2);
 	}
 	
 	public void InitThanksIncrement() {
@@ -237,7 +235,7 @@ class BlogReplyDaoSqlTest {
 		
 		when(jdbcTemp.queryForMap(any(), eq(2))).thenReturn(null);
 		
-		dao = new BlogReplyDaoSql(jdbcTemp);
+		setService();
 	}
 	
 	@Test
@@ -245,17 +243,23 @@ class BlogReplyDaoSqlTest {
 		// TODO インクリメント処理のテスト
 		InitThanksIncrement();
 		
-		int ret = dao.thanksIncrement(1);
+		int ret = service.thanksIncrement(1);
 		Assertions.assertEquals(ret, 2);
 		
-		ret = dao.thanksIncrement(2);
+		ret = service.thanksIncrement(2);
 		Assertions.assertEquals(ret, -1);
 	}
 	
+	public void setService() {
+		// TODO サービスのインスタンス化
+		BlogReplyDao dao = new BlogReplyDaoSql(jdbcTemp);
+		service = new BlogReplyServiceUse(dao);
+	}
+
 	@AfterEach
 	public void Release() {
 		jdbcTemp = null;
-		dao = null;
+		service = null;
 	}
 
 }
